@@ -15,26 +15,26 @@ class Node:
         return current
 
 #Remove
-def removeNode(root, node):
-    if root is None:
+    def removeNode(self, root, node):
+        if root is None:
+            return root
+        if node < root.data:
+            root.left = self.removeNode(root.left, node)
+        elif node > root.data:
+            root.right = self.removeNode(root.right, node)
+        else:
+            if root.left is None:
+                temp = root.right
+                root = None
+                return temp
+            elif root.right is None:
+                temp = root.left
+                root = None
+                return temp
+            temp = findMinNode(root.right)
+            root.data = temp.data
+            root.right = self.removeNode(root.right, temp.data)
         return root
-    if node < root.data:
-        root.left = removeNode(root.left, node)
-    elif node > root.data:
-        root.right = removeNode(root.right, node)
-    else:
-        if root.left is None:
-            temp = root.right
-            root = None
-            return temp
-        elif root.right is None:
-            temp = root.left
-            root = None
-            return temp
-        temp = findMinNode(root.right)
-        root.data = temp.data
-        root.right = removeNode(root.right, temp.data)
-    return root
 
 #Min node
 def findMinNode(node):
@@ -82,7 +82,7 @@ root.insert(root, 80)
 print("En orden")
 inOrder(root)
 print("En preorden y se elimina el 20")
-root = removeNode(root, 20)
+root.removeNode(root, 20)
 preOrder(root)
 print("En postorden")
 postOrder(root)
