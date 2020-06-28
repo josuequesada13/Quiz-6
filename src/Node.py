@@ -4,19 +4,19 @@ class Node:
         self.right = None
         self.data = data
 
-#Insert
-def insert(current, data):
-    if current is None:
-        return Node(data)
-    if data < current.data:
-        current.left = insert(current.left, data)
-    else:
-        current.right = insert(current.right, data)
-    return current
+    #Insert
+    def insert(self, current, data):
+        if current is None:
+            return Node(data)
+        if data < current.data:
+            current.left = self.insert(current.left, data)
+        else:
+            current.right = self.insert(current.right, data)
+        return current
 
 #Remove
 def removeNode(root, node):
-    if root is not None:
+    if root is None:
         return root
     if node < root.data:
         root.left = removeNode(root.left, node)
@@ -34,6 +34,7 @@ def removeNode(root, node):
         temp = findMinNode(root.right)
         root.data = temp.data
         root.right = removeNode(root.right, temp.data)
+    return root
 
 #Min node
 def findMinNode(node):
@@ -70,17 +71,18 @@ def postOrder(root):
         inOrder(root.right)
         print(root.data)
 
-root = None
-root = insert(root, 50)
-root = insert(root, 30)
-root = insert(root, 20)
-root = insert(root, 40)
-root = insert(root, 70)
-root = insert(root, 60)
-root = insert(root, 80)
+root = Node(50)
+root.insert(root, 55)
+root.insert(root, 30)
+root.insert(root, 20)
+root.insert(root, 40)
+root.insert(root, 70)
+root.insert(root, 60)
+root.insert(root, 80)
 print("En orden")
 inOrder(root)
-print("En preorden")
+print("En preorden y se elimina el 20")
+root = removeNode(root, 20)
 preOrder(root)
 print("En postorden")
 postOrder(root)
